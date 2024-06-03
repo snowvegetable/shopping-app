@@ -1,6 +1,6 @@
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 
 type PathItem = {
   name: string;
@@ -9,8 +9,8 @@ type PathItem = {
 
 //導覽列路徑
 const pathList: PathItem[] = [
-  { name: '首頁', href: '/' },
-  { name: '登入', href: '/login' },
+  { name: "首頁", href: "/" },
+  { name: "登入", href: "/login" },
 ];
 
 export default function NavigationBar() {
