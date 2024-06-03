@@ -10,6 +10,7 @@ type PathItem = {
 //導覽列路徑
 const pathList: PathItem[] = [
   { name: "首頁", href: "/" },
+  { name: "註冊", href: "/register" },
   { name: "登入", href: "/login" },
 ];
 

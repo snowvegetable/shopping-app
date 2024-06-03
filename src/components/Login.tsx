@@ -1,15 +1,11 @@
-// import Form from "react-bootstrap/Form";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 export default function Login() {
   return (
     <Container className="d-flex vh-100 justify-content-center align-items-center">
       <Row className="justify-content-center w-100">
-        <Col md={4}>
-          <div
-            className="card p-4 text-white"
-            style={{ borderRadius: "8px", backgroundColor: "#1c1c1c" }}
-          >
+        <Col md={5}>
+          <div className="card p-4 text-black mb-4">
             <Form>
               <h2 className="text-center mb-4">登入</h2>
               <Form.Group controlId="formBasicEmail" className="mb-4">
@@ -17,9 +13,7 @@ export default function Login() {
                 <Form.Control
                   type="text"
                   style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    width: "300px",
+                    color: "black",
                     border: "1px solid black",
                   }}
                   required
@@ -31,9 +25,7 @@ export default function Login() {
                 <Form.Control
                   type="password"
                   style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    width: "300px",
+                    color: "black",
                     border: "1px solid black",
                   }}
                   required
