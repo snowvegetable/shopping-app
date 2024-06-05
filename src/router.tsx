@@ -1,13 +1,13 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
-import Home from "./components/Home";
-import ErrorPage from "./components/Error";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import { createBrowserRouter } from 'react-router-dom';
+import App from './App';
+import Home from './components/Home';
+import ErrorPage from './components/Error';
+import Login from './components/Login';
+import Register from './components/Register';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
@@ -16,11 +16,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "login",
+        path: 'login',
         element: <Login />,
       },
       {
-        path: "register",
+        path: 'register',
         element: <Register />,
       },
     ],
