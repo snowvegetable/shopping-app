@@ -8,6 +8,7 @@ import PublicPage from './components/PublicPage';
 import AuthRouter, {
   loader as AuthRouterLoader,
 } from './components/AuthRouter';
+import ProductForm from './components/Produce';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: 'test',
+    element: <ProductForm />,
   },
   {
     path: '/*',

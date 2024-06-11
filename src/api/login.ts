@@ -1,5 +1,5 @@
 export default async function login(): Promise<Login> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const data: Login = {
       status: 'success',
       data: {
