@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function ProductForm() {
+export default function Product() {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrement = () => {
@@ -51,10 +51,6 @@ export default function ProductForm() {
   const buttonEndStyle = {
     borderRadius: '0 50% 50% 0', // 右按钮半圆
     marginLeft: '-1px', // 防止边框重叠
-  };
-
-  const formControlStyle = {
-    // borderRadius: '0', // 去除输入框的圆角
   };
 
   return (
@@ -97,7 +93,6 @@ export default function ProductForm() {
                   value={quantity}
                   onChange={handleChange}
                   className="text-center"
-                  style={formControlStyle}
                 />
                 <Button
                   variant="outline-secondary"
