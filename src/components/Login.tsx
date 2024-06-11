@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 export default function Login() {
   return (
@@ -13,8 +13,8 @@ export default function Login() {
                 <Form.Control
                   type="text"
                   style={{
-                    color: "black",
-                    border: "1px solid black",
+                    color: 'black',
+                    border: '1px solid black',
                   }}
                   required
                 />
@@ -25,8 +25,8 @@ export default function Login() {
                 <Form.Control
                   type="password"
                   style={{
-                    color: "black",
-                    border: "1px solid black",
+                    color: 'black',
+                    border: '1px solid black',
                   }}
                   required
                 />

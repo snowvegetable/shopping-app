@@ -4,6 +4,7 @@ import Home from './components/Home';
 import ErrorPage from './components/Error';
 import Login from './components/Login';
 import Register from './components/Register';
+import PublicPage from './components/PublicPage';
 
 const router = createBrowserRouter([
   {
@@ -12,16 +13,22 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'register',
-        element: <Register />,
+        path: 'public',
+        element: <PublicPage />,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+          {
+            path: 'login',
+            element: <Login />,
+          },
+          {
+            path: 'register',
+            element: <Register />,
+          },
+        ],
       },
     ],
   },
