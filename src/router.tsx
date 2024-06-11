@@ -1,10 +1,13 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import Home from './components/Home';
 import ErrorPage from './components/Error';
 import Login from './components/Login';
 import Register from './components/Register';
 import PublicPage from './components/PublicPage';
+import AuthRouter, {
+  loader as AuthRouterLoader,
+} from './components/AuthRouter';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +33,22 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'authenticate',
+        element: <AuthRouter />,
+        loader: AuthRouterLoader,
+        children: [
+          {
+            index: true,
+            element: <div>hello</div>,
+          },
+        ],
+      },
     ],
+  },
+  {
+    path: '/*',
+    element: <Navigate to="/public" />,
   },
 ]);
 

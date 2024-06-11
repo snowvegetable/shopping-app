@@ -19,3 +19,12 @@ type PathList = {
   index: PathItem; //主頁
   pathList: PathItem[];
 };
+
+type Login = {
+  status: 'success' | 'error';
+  data?: LoginData;
+};
+
+type LoginData = {
+  username: string;
+};
