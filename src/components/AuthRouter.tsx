@@ -17,21 +17,28 @@ export async function action({ request }) {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData) as LoginFormData;
 
-  const loginStatus = (await login(
-    updates.account,
-    updates.password
-  )) as LoginStatus;
+  try {
+    const loginStatus: LoginStatus = await login(
+      updates.account,
+      updates.password
+    );
 
-  if (!loginStatus || loginStatus.status === 'error') {
-    return redirect('/');
+    console.log(loginStatus);
+
+    if (!loginStatus || loginStatus.status === 'error') {
+      return redirect('/');
+    }
+
+    localStorage.setItem('token', loginStatus.token);
+    localStorage.setItem('userData', JSON.stringify(loginStatus.userData));
+
+    console.log('action login');
+
+    return {};
+  } catch (e) {
+    alert('帳號或密碼輸入錯誤');
+    return redirect('/public/login');
   }
-
-  localStorage.setItem('token', loginStatus.token);
-  localStorage.setItem('userData', JSON.stringify(loginStatus.userData));
-
-  console.log('action login');
-
-  return {};
 }
 
 export default function AuthRouter() {
