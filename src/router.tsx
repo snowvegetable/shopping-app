@@ -3,12 +3,12 @@ import App from './App';
 import Home from './components/Home';
 import ErrorPage from './components/Error';
 import Login from './components/Login';
-import Register from './components/Register';
-import PublicPage from './components/PublicPage';
+import Register, { action as registerAction } from './components/Register';
+import Public from './components/Public';
 import AuthRouter, {
   loader as AuthRouterLoader,
+  action as AuthRouterAction,
 } from './components/AuthRouter';
-import ProductForm from './components/Produce';
 
 const router = createBrowserRouter([
   {
@@ -17,8 +17,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        index: true,
+        element: <Navigate to="/public" />,
+      },
+      {
         path: 'public',
-        element: <PublicPage />,
+        element: <Public />,
         children: [
           {
             index: true,
@@ -31,6 +35,7 @@ const router = createBrowserRouter([
           {
             path: 'register',
             element: <Register />,
+            action: registerAction,
           },
         ],
       },
@@ -38,21 +43,22 @@ const router = createBrowserRouter([
         path: 'authenticate',
         element: <AuthRouter />,
         loader: AuthRouterLoader,
+        action: AuthRouterAction,
         children: [
           {
             index: true,
             element: <div>hello</div>,
+          },
+          {
+            path: 'test',
+            element: <div>test</div>,
           },
         ],
       },
     ],
   },
   {
-    path: 'test',
-    element: <ProductForm />,
-  },
-  {
-    path: '/*',
+    path: '*',
     element: <Navigate to="/public" />,
   },
 ]);

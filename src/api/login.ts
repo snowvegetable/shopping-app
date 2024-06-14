@@ -1,11 +1,18 @@
-export default async function login(): Promise<Login> {
+export default async function login(
+  account: string,
+  password: string
+): Promise<LoginStatus> {
   return new Promise((resolve) => {
-    const data: Login = {
+    const data: LoginStatus = {
       status: 'success',
-      data: {
+      token: 'token',
+      userData: {
         username: 'cat',
       },
     };
-    resolve(data);
+
+    setTimeout(() => {
+      resolve(data);
+    }, 1000);
   });
 }

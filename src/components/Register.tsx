@@ -1,12 +1,28 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { redirect, useFetcher } from 'react-router-dom';
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData) as RegisterFormData;
+
+  if (updates.password !== updates.checkPassword) {
+    alert('密碼與確認密碼不一致');
+    return redirect('/public/register');
+  }
+
+  alert('註冊成功');
+  return redirect('/public/login');
+}
 
 export default function Register() {
+  const fetcher = useFetcher();
+
   return (
     <Container className="d-flex vh-100 justify-content-center align-items-center">
       <Row className="justify-content-center w-100">
         <Col md={5}>
           <div className="card p-4 text-black mb-4">
-            <Form>
+            <fetcher.Form method="post">
               <h2 className="text-center mb-4">註冊</h2>
 
               <Form.Group controlId="formName" className="mb-4">
@@ -17,6 +33,7 @@ export default function Register() {
                     color: 'black',
                     border: '1px solid black',
                   }}
+                  name="name"
                   required
                 />
               </Form.Group>
@@ -29,6 +46,7 @@ export default function Register() {
                     color: 'black',
                     border: '1px solid black',
                   }}
+                  name="account"
                   required
                 />
               </Form.Group>
@@ -41,6 +59,7 @@ export default function Register() {
                     color: 'black',
                     border: '1px solid black',
                   }}
+                  name="email"
                   required
                 />
               </Form.Group>
@@ -55,6 +74,7 @@ export default function Register() {
                         color: 'black',
                         border: '1px solid black',
                       }}
+                      name="password"
                       required
                     />
                   </Form.Group>
@@ -69,6 +89,7 @@ export default function Register() {
                         color: 'black',
                         border: '1px solid black',
                       }}
+                      name="checkPassword"
                       required
                     />
                   </Form.Group>
@@ -82,7 +103,7 @@ export default function Register() {
               <Button variant="primary" type="submit" className="w-100">
                 註冊
               </Button>
-            </Form>
+            </fetcher.Form>
           </div>
         </Col>
       </Row>

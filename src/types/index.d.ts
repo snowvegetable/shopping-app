@@ -20,11 +20,52 @@ type PathList = {
   pathList: PathItem[];
 };
 
-type Login = {
+/**
+ * 登入狀態和使用者資料
+ *
+ * @param status 登入狀態
+ * @param userData 使用者資料
+ * @param token 用於身分驗證的token
+ */
+type LoginStatus = {
   status: 'success' | 'error';
-  data?: LoginData;
+  token: string;
+  userData?: UserData;
 };
 
-type LoginData = {
+/**
+ * 登入表單資料
+ *
+ * @param account 帳號
+ * @param password 密碼
+ */
+type LoginFormData = {
+  account: string;
+  password: string;
+};
+
+/**
+ * 使用者資料
+ *
+ * @param username 使用者名稱
+ */
+type UserData = {
   username: string;
+};
+
+/**
+ * 註冊表單資料
+ *
+ * @param account 帳號
+ * @param password 密碼
+ * @param checkPassword 確認密碼
+ * @param name 名稱
+ * @param email 電子信箱
+ */
+type RegisterFormData = {
+  account: string;
+  password: string;
+  checkPassword: string;
+  name: string;
+  email: string;
 };

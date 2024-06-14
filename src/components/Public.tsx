@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 
-export default function PublicPage() {
+export default function Public() {
   const pathList: PathList = {
     index: {
       name: '購物車網頁',

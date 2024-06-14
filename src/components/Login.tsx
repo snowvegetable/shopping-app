@@ -1,4 +1,5 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Form as RouterForm } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -6,7 +7,7 @@ export default function Login() {
       <Row className="justify-content-center w-100">
         <Col md={5}>
           <div className="card p-4 text-black mb-4">
-            <Form>
+            <RouterForm method="post" action="/authenticate">
               <h2 className="text-center mb-4">登入</h2>
               <Form.Group controlId="formBasicEmail" className="mb-4">
                 <Form.Label>使用者名稱 or 電子郵件</Form.Label>
@@ -16,6 +17,7 @@ export default function Login() {
                     color: 'black',
                     border: '1px solid black',
                   }}
+                  name="account"
                   required
                 />
               </Form.Group>
@@ -28,6 +30,7 @@ export default function Login() {
                     color: 'black',
                     border: '1px solid black',
                   }}
+                  name="password"
                   required
                 />
               </Form.Group>
@@ -44,7 +47,7 @@ export default function Login() {
               <Button variant="primary" type="submit" className="w-100">
                 登入
               </Button>
-            </Form>
+            </RouterForm>
           </div>
         </Col>
       </Row>
