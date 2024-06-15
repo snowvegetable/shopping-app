@@ -1,5 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
-import catImg from '../asset/img/cat.jpg';
+import catImg from '../../asset/img/cat.jpg';
 
 export default function Home() {
   return (

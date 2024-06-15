@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import NavigationBar from './NavigationBar';
+import NavigationBar from '../NavigationBar';
 
 export default function Public() {
   const pathList: PathList = {

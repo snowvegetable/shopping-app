@@ -18,7 +18,7 @@ export default function Register() {
   const fetcher = useFetcher();
 
   return (
-    <Container className="d-flex vh-100 justify-content-center align-items-center">
+    <Container className="d-flex vh-100 justify-content-center my-12">
       <Row className="justify-content-center w-100">
         <Col md={5}>
           <div className="card p-4 text-black mb-4">

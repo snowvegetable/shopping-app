@@ -1,5 +1,5 @@
 import { Outlet, redirect } from 'react-router-dom';
-import login from '../api/login';
+import login from '../../api/login';
 
 export async function loader() {
   const token = localStorage.getItem('token');
