@@ -16,7 +16,7 @@ export default function Public() {
 
   return (
     <>
-      <NavigationBar pathList={pathList} />
+      <NavigationBar pathList={pathList} isLogin />
       <Outlet />
     </>
   );

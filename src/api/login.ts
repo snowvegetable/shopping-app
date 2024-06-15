@@ -23,8 +23,6 @@ export default async function login(
     );
 
     if (!user) {
-      console.log('aaa');
-
       reject({
         status: 'error',
       });

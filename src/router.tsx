@@ -9,6 +9,7 @@ import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
 } from './components/AuthRouter';
+import Test from './components/Test';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <Navigate to="/public" />,
+  },
+  {
+    path: 'test',
+    element: <Test />,
   },
 ]);
 
