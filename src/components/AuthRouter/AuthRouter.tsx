@@ -1,5 +1,6 @@
 import { Outlet, redirect } from 'react-router-dom';
 import login from '../../api/login';
+import NavigationBar from '../NavigationBar';
 
 export async function loader() {
   const token = localStorage.getItem('token');
@@ -42,5 +43,22 @@ export async function action({ request }) {
 }
 
 export default function AuthRouter() {
-  return <Outlet />;
+  const pathList: PathList = {
+    index: {
+      name: '購物車網頁',
+      href: '/public',
+    },
+    pathList: [
+      { name: '首頁', href: '/public' },
+      { name: '商品', href: '/public/login' },
+      { name: '結帳', href: '/public/register' },
+    ],
+  };
+
+  return (
+    <>
+      <NavigationBar pathList={pathList} isLogin />
+      <Outlet />
+    </>
+  );
 }

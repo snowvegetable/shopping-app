@@ -1,6 +1,7 @@
 import reactImg from '../asset/img/react.png';
 import catImg from '../asset/img/cat.jpg';
 import { Link } from 'react-router-dom';
+import logout from '../api/logout';
 
 export default function NavigationBar({
   pathList,
@@ -20,6 +21,7 @@ export default function NavigationBar({
           <Link
             className="hover:bg-black mx-1 px-5 py-2 rounded-lg text-gray-100 no-underline"
             to={item.href}
+            key={item.href}
           >
             {item.name}
           </Link>
@@ -38,17 +40,15 @@ export default function NavigationBar({
               className="flex px-4 py-2 hover:bg-gray-100 text-black no-underline"
               to="#"
             >
-              個人資料
-            </Link>
-            <Link
-              className="flex px-4 py-2 hover:bg-gray-100 text-black no-underline"
-              to="#"
-            >
               購物車
             </Link>
             <Link
               className="flex px-4 py-2 hover:bg-gray-100 text-black no-underline"
-              to="#"
+              to="/public"
+              onClick={() => {
+                logout();
+                alert('您已經登出');
+              }}
             >
               登出
             </Link>

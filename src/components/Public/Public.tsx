@@ -1,8 +1,22 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import NavigationBar from '../NavigationBar';
+import checkIsLogin from '../../api/checkIsLogin';
+import logout from '../../api/logout';
+
+export async function loader() {
+  const isLogin = await checkIsLogin();
+  console.log(isLogin);
+
+  if (!isLogin) {
+    await logout();
+  }
+
+  return { isLogin };
+}
 
 export default function Public() {
-  const pathList: PathList = {
+  const { isLogin } = useLoaderData() as { isLogin: boolean };
+  let pathList: PathList = {
     index: {
       name: '購物車網頁',
       href: '/public',
@@ -14,9 +28,23 @@ export default function Public() {
     ],
   };
 
+  if (isLogin) {
+    pathList = {
+      index: {
+        name: '購物車網頁',
+        href: '/public',
+      },
+      pathList: [
+        { name: '首頁', href: '/public' },
+        { name: '商品', href: '/public/login' },
+        { name: '結帳', href: '/public/register' },
+      ],
+    };
+  }
+
   return (
     <>
-      <NavigationBar pathList={pathList} isLogin />
+      <NavigationBar pathList={pathList} isLogin={isLogin} />
       <Outlet />
     </>
   );

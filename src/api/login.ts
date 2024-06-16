@@ -35,6 +35,7 @@ export default async function login(
         token: 'token',
         userData: {
           username: user.account,
+          productList: [],
         },
       });
     }, 100);

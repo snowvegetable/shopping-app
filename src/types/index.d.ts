@@ -30,7 +30,7 @@ type PathList = {
 type LoginStatus = {
   status: 'success' | 'error';
   token: string;
-  userData?: UserData;
+  userData?: User;
 };
 
 /**
@@ -49,8 +49,9 @@ type LoginFormData = {
  *
  * @param username 使用者名稱
  */
-type UserData = {
+type User = {
   username: string;
+  productList: Produce[];
 };
 
 /**
@@ -68,4 +69,18 @@ type RegisterFormData = {
   checkPassword: string;
   name: string;
   email: string;
+};
+
+/**
+ * 商品
+ * @param id 商品id
+ * @param name 商品名稱
+ * @param price 商品價格
+ * @param numberOfProducts 商品數量
+ */
+type Produce = {
+  id: string;
+  name: string;
+  price: number;
+  numberOfProducts: number;
 };

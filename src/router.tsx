@@ -6,14 +6,14 @@ import Login from './components/Public/Login';
 import Register, {
   action as registerAction,
 } from './components/Public/Register';
-import Public from './components/Public/Public';
-import Produce from './components/AuthRouter/Produce';
+import Public, { loader as publicLoader } from './components/Public/Public';
+import Produce from './components/Public/Produce';
 import ShoppingCart from './components/AuthRouter/ShoppingCart';
 import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
 } from './components/AuthRouter/AuthRouter';
-import ProductCard from './components/AuthRouter/ProductCard';
+import ProductCard from './components/Public/ProductCard';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +28,7 @@ const router = createBrowserRouter([
       {
         path: 'public',
         element: <Public />,
+        loader: publicLoader,
         children: [
           {
             index: true,
@@ -42,15 +43,13 @@ const router = createBrowserRouter([
             element: <Register />,
             action: registerAction,
           },
-          //test
+          {
+            path: 'produce',
+            element: <Produce />,
+          },
           {
             path: 'shoppingcart',
             element: <ShoppingCart />,
-          },
-          //test
-          {
-            path: 'Produce',
-            element: <Produce />,
           },
         ],
       },
@@ -64,10 +63,6 @@ const router = createBrowserRouter([
             index: true,
             element: <div>hello</div>,
           },
-          {
-            path: 'test',
-            element: <div>test</div>,
-          },
         ],
       },
     ],
@@ -75,15 +70,6 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <Navigate to="/public" />,
-  },
-  {
-    path: 'test',
-    element: (
-      <ProductCard
-        title="Card Title"
-        text="Some quick example text to build on the card title and make up thebulk of the card's content"
-      />
-    ),
   },
 ]);
 
