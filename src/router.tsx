@@ -1,19 +1,18 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import Home from './components/Public/Home';
+import Home, { loader as homeLoader } from './components/Public/Home';
 import ErrorPage from './components/Error';
 import Login from './components/Public/Login';
 import Register, {
   action as registerAction,
 } from './components/Public/Register';
 import Public, { loader as publicLoader } from './components/Public/Public';
-import Produce from './components/Public/Produce';
-import ShoppingCart from './components/AuthRouter/ShoppingCart';
+import Product, { loader as productLoader } from './components/Public/Product';
+import ShoppingCart from './components/Public/ShoppingCart';
 import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
 } from './components/AuthRouter/AuthRouter';
-import ProductCard from './components/Public/ProductCard';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +32,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Home />,
+            loader: homeLoader,
           },
           {
             path: 'login',
@@ -44,12 +44,9 @@ const router = createBrowserRouter([
             action: registerAction,
           },
           {
-            path: 'produce',
-            element: <Produce />,
-          },
-          {
-            path: 'shoppingcart',
-            element: <ShoppingCart />,
+            path: 'product/:productId',
+            element: <Product />,
+            loader: productLoader,
           },
         ],
       },
@@ -62,6 +59,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <div>hello</div>,
+          },
+          {
+            path: 'shoppingcart',
+            element: <ShoppingCart />,
           },
         ],
       },

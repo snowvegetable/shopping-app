@@ -1,53 +1,27 @@
-import Carousel from 'react-bootstrap/Carousel';
-import catImg from '../../asset/img/cat.jpg';
 import ProductCard from './ProductCard';
+import getRecommendProductsList from '../../api/getRecommendProductsList';
+import { useLoaderData } from 'react-router-dom';
+
+export async function loader() {
+  const productList = await getRecommendProductsList();
+  return { productList };
+}
 
 export default function Home() {
-  return (
-    <div>
-      {/* <div className="flex">
-        <Carousel style={{ width: 500 }} className="m-2">
-          <Carousel.Item>
-            <img src={catImg} alt="" />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src={catImg} alt="" />
-          </Carousel.Item>
-        </Carousel>
-        <Carousel style={{ width: 500 }} className="m-2">
-          <Carousel.Item>
-            <img src={catImg} alt="" />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src={catImg} alt="" />
-          </Carousel.Item>
-        </Carousel>
-        <Carousel style={{ width: 500 }} className="m-2">
-          <Carousel.Item>
-            <img src={catImg} alt="" />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img src={catImg} alt="" />
-          </Carousel.Item>
-        </Carousel>
-      </div> */}
+  const { productList } = useLoaderData() as { productList: Product[] };
 
-      <div className="flex">
-        <ProductCard
-          imgSrc={catImg}
-          title="Card Title"
-          text="Some quick example text to build on the card title and make up thebulk of the card's content"
-        />
-        <ProductCard
-          imgSrc={catImg}
-          title="Card Title"
-          text="Some quick example text to build on the card title and make up thebulk of the card's content"
-        />
-        <ProductCard
-          imgSrc={catImg}
-          title="Card Title"
-          text="Some quick example text to build on the card title and make up thebulk of the card's content"
-        />
+  return (
+    <div className="m-24">
+      <div className="flex mb-5 justify-between flex-wrap">
+        {productList.map((product) => (
+          <ProductCard
+            className="mb-5"
+            imgSrc={product.img}
+            title={product.name}
+            text={product.text}
+            productId={product.id}
+          />
+        ))}
       </div>
     </div>
   );

@@ -50,8 +50,7 @@ export default function AuthRouter() {
     },
     pathList: [
       { name: '首頁', href: '/public' },
-      { name: '商品', href: '/public/login' },
-      { name: '結帳', href: '/public/register' },
+      { name: '結帳', href: '/authenticate/ShoppingCart' },
     ],
   };
 

@@ -51,7 +51,7 @@ type LoginFormData = {
  */
 type User = {
   username: string;
-  productList: Produce[];
+  productList: Product[];
 };
 
 /**
@@ -78,9 +78,11 @@ type RegisterFormData = {
  * @param price 商品價格
  * @param numberOfProducts 商品數量
  */
-type Produce = {
+type Product = {
   id: string;
   name: string;
   price: number;
   numberOfProducts: number;
+  img: string;
+  text: string;
 };
