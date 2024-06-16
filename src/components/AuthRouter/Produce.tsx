@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function Product() {
+export default function Produce() {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrement = () => {
@@ -31,7 +31,7 @@ export default function Product() {
       (Number(value) >= 0 && Number.isInteger(Number(value)))
     ) {
       if (Number(value) > 100) {
-        setQuantity(Number('100'));
+        setQuantity(100);
       } else {
         setQuantity(Number(value));
       }
@@ -43,15 +43,15 @@ export default function Product() {
   //   // 在这里处理表单提交逻辑
   // };
 
-  const buttonStyle = {
-    borderRadius: '50% 0 0 50%', // 左按钮半圆
-    marginRight: '-1px', // 防止边框重叠
-  };
+  // const buttonStyle = {
+  //   borderRadius: '50% 0 0 50%', // 左按钮半圆
+  //   marginRight: '-1px', // 防止边框重叠
+  // };
 
-  const buttonEndStyle = {
-    borderRadius: '0 50% 50% 0', // 右按钮半圆
-    marginLeft: '-1px', // 防止边框重叠
-  };
+  // const buttonEndStyle = {
+  //   borderRadius: '0 50% 50% 0', // 右按钮半圆
+  //   marginLeft: '-1px', // 防止边框重叠
+  // };
 
   return (
     <Container className="mt-20 mb-5">
@@ -78,13 +78,13 @@ export default function Product() {
               <div>price</div>
             </Form.Group>
 
-            <Form.Group controlId="Quantity" className="text-center mb-4">
+            <Form.Group controlId="Quantity" className="text-center mb-4 px-12">
               <Form.Label>數量</Form.Label>
               <InputGroup>
                 <Button
                   variant="outline-secondary"
                   onClick={handleDecrement}
-                  style={buttonStyle}
+                  className="quantity-button"
                 >
                   -
                 </Button>
@@ -92,12 +92,12 @@ export default function Product() {
                   type="text"
                   value={quantity}
                   onChange={handleChange}
-                  className="text-center"
+                  className="quantity-input text-center"
                 />
                 <Button
                   variant="outline-secondary"
                   onClick={handleIncrement}
-                  style={buttonEndStyle}
+                  className="quantity-button"
                 >
                   +
                 </Button>

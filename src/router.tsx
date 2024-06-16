@@ -3,8 +3,12 @@ import App from './App';
 import Home from './components/Public/Home';
 import ErrorPage from './components/Error';
 import Login from './components/Public/Login';
-import Register, { action as registerAction } from './components/Public/Register';
+import Register, {
+  action as registerAction,
+} from './components/Public/Register';
 import Public from './components/AuthRouter/Public';
+import Produce from './components/AuthRouter/Produce';
+import ShoppingCart from './components/AuthRouter/ShoppingCart';
 import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
@@ -37,6 +41,16 @@ const router = createBrowserRouter([
             path: 'register',
             element: <Register />,
             action: registerAction,
+          },
+          //test
+          {
+            path: 'shoppingcart',
+            element: <ShoppingCart />,
+          },
+          //test
+          {
+            path: 'Produce',
+            element: <Produce />,
           },
         ],
       },
