@@ -3,13 +3,15 @@ import App from './App';
 import Home from './components/Public/Home';
 import ErrorPage from './components/Error';
 import Login from './components/Public/Login';
-import Register, { action as registerAction } from './components/Public/Register';
-import Public from './components/AuthRouter/Public';
+import Register, {
+  action as registerAction,
+} from './components/Public/Register';
+import Public from './components/Public/Public';
 import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
 } from './components/AuthRouter/AuthRouter';
-import Test from './components/Test';
+import ProductCard from './components/AuthRouter/ProductCard';
 
 const router = createBrowserRouter([
   {
@@ -64,7 +66,12 @@ const router = createBrowserRouter([
   },
   {
     path: 'test',
-    element: <Test />,
+    element: (
+      <ProductCard
+        title="Card Title"
+        text="Some quick example text to build on the card title and make up thebulk of the card's content"
+      />
+    ),
   },
 ]);
 

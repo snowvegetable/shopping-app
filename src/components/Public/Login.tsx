@@ -1,5 +1,5 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { Form as RouterForm } from 'react-router-dom';
+import { Link, Form as RouterForm } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -36,12 +36,12 @@ export default function Login() {
               </Form.Group>
 
               <div className="d-flex justify-content-between mb-4">
-                <a href="#" className="text-muted small">
+                <Link to="#" className="text-muted small">
                   忘記密碼
-                </a>
-                <a href="#" className="text-muted small">
+                </Link>
+                <Link to="/public/register" className="text-muted small">
                   註冊
-                </a>
+                </Link>
               </div>
 
               <Button variant="primary" type="submit" className="w-100">

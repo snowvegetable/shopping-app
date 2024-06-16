@@ -37,6 +37,6 @@ export default async function login(
           username: user.account,
         },
       });
-    }, 1000);
+    }, 100);
   });
 }
