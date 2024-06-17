@@ -14,13 +14,7 @@ export default function Home() {
     <div className="m-24">
       <div className="flex mb-5 justify-between flex-wrap">
         {productList.map((product) => (
-          <ProductCard
-            className="mb-5"
-            imgSrc={product.img}
-            title={product.name}
-            text={product.text}
-            productId={product.id}
-          />
+          <ProductCard className="mb-5" product={product} />
         ))}
       </div>
     </div>
