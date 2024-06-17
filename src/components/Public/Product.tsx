@@ -23,7 +23,9 @@ export default function Product() {
 
   //新增商品數量
   const productIncrement = () => {
-    setNumberOfProduct((prev) => (prev < 100 ? prev + 1 : 100));
+    setNumberOfProduct((prev) =>
+      prev < numberOfProducts ? prev + 1 : numberOfProducts
+    );
   };
 
   //刪除商品數量
@@ -35,8 +37,8 @@ export default function Product() {
   const changeProductInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     setNumberOfProduct(() => {
-      if (newValue > 100) {
-        return 100;
+      if (newValue > numberOfProducts) {
+        return numberOfProducts;
       }
 
       if (newValue < 1) {
