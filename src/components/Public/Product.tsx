@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import getProduct from '../../api/getProduct';
 import { redirect, useLoaderData } from 'react-router-dom';
 import heartSvg from '../../asset/svg/heart.svg';
 import shoppingCartSvg from '../../asset/svg/shopping-cart.svg';
+import NumberInputBox from '../NumberInputBox';
 
 export async function loader({ params }) {
   const product = await getProduct(params.productId);
@@ -18,36 +19,7 @@ export async function loader({ params }) {
 export default function Product() {
   const { product } = useLoaderData() as { product: Product };
   const { name, price, numberOfProducts, img, text }: Product = product;
-
   const [numberOfProduct, setNumberOfProduct] = useState(1);
-
-  //新增商品數量
-  const productIncrement = () => {
-    setNumberOfProduct((prev) =>
-      prev < numberOfProducts ? prev + 1 : numberOfProducts
-    );
-  };
-
-  //刪除商品數量
-  const productDecrement = () => {
-    setNumberOfProduct((prev) => (prev > 1 ? prev - 1 : 1));
-  };
-
-  //輸入商品數量
-  const changeProductInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
-    setNumberOfProduct(() => {
-      if (newValue > numberOfProducts) {
-        return numberOfProducts;
-      }
-
-      if (newValue < 1) {
-        return 1;
-      }
-
-      return newValue;
-    });
-  };
 
   return (
     <div className="container border-5 rounded-lg py-6 flex justify-around mt-3">
@@ -64,28 +36,12 @@ export default function Product() {
         </div>
 
         <div className="mb-5 ">
-          <div className="h-10 flex items-center">
-            <span className="mr-5 text-xl align-middle">數量</span>
-            <button
-              className="w-10 h-full border-2 rounded-l-md"
-              onClick={productDecrement}
-            >
-              -
-            </button>
-            <input
-              className="text-center h-full border-y-2 outline-none"
-              type="number"
-              min={1}
-              value={numberOfProduct}
-              onChange={changeProductInput}
-            />
-            <button
-              className="w-10 h-full border-2 rounded-r-md"
-              onClick={productIncrement}
-            >
-              +
-            </button>
-          </div>
+          <NumberInputBox
+            min={1}
+            max={numberOfProducts}
+            value={numberOfProduct}
+            setValue={setNumberOfProduct}
+          />
         </div>
 
         <div>
