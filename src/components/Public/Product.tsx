@@ -21,14 +21,30 @@ export default function Product() {
 
   const [numberOfProduct, setNumberOfProduct] = useState(1);
 
+  //新增商品數量
   const productIncrement = () => {
-    setNumberOfProduct((prevNumberOfProduct) => prevNumberOfProduct + 1);
+    setNumberOfProduct((prev) => (prev < 100 ? prev + 1 : 100));
   };
 
+  //刪除商品數量
   const productDecrement = () => {
-    setNumberOfProduct((prevNumberOfProduct) =>
-      prevNumberOfProduct > 1 ? prevNumberOfProduct - 1 : 1
-    );
+    setNumberOfProduct((prev) => (prev > 1 ? prev - 1 : 1));
+  };
+
+  //輸入商品數量
+  const changeProductInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(e.target.value);
+    setNumberOfProduct(() => {
+      if (newValue > 100) {
+        return 100;
+      }
+
+      if (newValue < 1) {
+        return 1;
+      }
+
+      return newValue;
+    });
   };
 
   return (
@@ -59,10 +75,7 @@ export default function Product() {
               type="number"
               min={1}
               value={numberOfProduct}
-              onChange={(e) => {
-                const newValue = Number(e.target.value);
-                setNumberOfProduct(newValue > 1 ? newValue : 1);
-              }}
+              onChange={changeProductInput}
             />
             <button
               className="w-10 h-full border-2 rounded-r-md"
