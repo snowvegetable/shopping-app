@@ -12,7 +12,7 @@ export default function NavigationBar({
 }) {
   return (
     <header className="bg-gray-800 h-16 flex text-gray-300 px-3">
-      <Link to={pathList.index.href} className="mr-5">
+      <Link to={pathList.index.href} className="mr-5 p-2">
         <img className="h-full" src={reactImg} alt={pathList.index.name} />
       </Link>
 
@@ -29,12 +29,12 @@ export default function NavigationBar({
       </nav>
 
       {isLogin && (
-        <div className="group relrelative ml-auto flex items-center">
+        <div className="group relrelative ml-auto flex items-center ">
           <img className="h-14 rounded-full" src={catImg} alt="" />
           <div
             className="absolute bg-white text-gray-700 text-sm top-14 w-48 right-0 
                       ring-1 ring-black ring-opacity-0 rounded-md py-2 scale-0 group-hover:scale-100 
-                      duration-300 origin-top-right"
+                      duration-300 origin-top-right border-2"
           >
             <Link
               className="flex px-4 py-2 hover:bg-gray-100 text-black no-underline"
