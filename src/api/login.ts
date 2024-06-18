@@ -36,6 +36,7 @@ export default async function login(
         userData: {
           username: user.account,
           productList: [],
+          favoriteProductList: [],
         },
       });
     }, 100);

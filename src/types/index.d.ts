@@ -52,6 +52,7 @@ type LoginFormData = {
 type User = {
   username: string;
   productList: Product[];
+  favoriteProductList: string[];
 };
 
 /**
