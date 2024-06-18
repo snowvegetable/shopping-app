@@ -57,7 +57,7 @@ export default function ShoppingCar() {
       });
 
       alert('下訂成功');
-      navigate('/');
+      navigate('/authenticate/order');
     }
   };
 
