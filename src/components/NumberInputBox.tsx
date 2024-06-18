@@ -3,11 +3,13 @@ export default function NumberInputBox({
   max,
   value,
   setValue,
+  text,
   className = 'h-10',
 }: {
   min: number;
   max: number;
   value: number;
+  text?: string;
   setValue: React.Dispatch<React.SetStateAction<number>>;
   className?: string;
 }) {
@@ -39,7 +41,7 @@ export default function NumberInputBox({
 
   return (
     <div className={`flex items-center ${className}`}>
-      <span className="mr-5 text-xl align-middle">數量</span>
+      <span className="mr-5 text-xl align-middle">{text}</span>
       <button
         className="w-10 h-full border-2 rounded-l-md"
         onClick={productDecrement}

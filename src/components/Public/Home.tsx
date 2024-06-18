@@ -1,20 +1,37 @@
-import ProductCard from './ProductCard';
 import getRecommendProductsList from '../../api/getRecommendProductsList';
-import { useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData } from 'react-router-dom';
+import ProductCard from '../ProductCard';
 
 export async function loader() {
   const productList = await getRecommendProductsList();
-  return { productList };
+  const userDataJson = localStorage.getItem('userData');
+
+  if (!userDataJson) {
+    return redirect('/');
+  }
+
+  const userData = (await JSON.parse(userDataJson)) as User;
+  const favoriteProductList = userData.favoriteProductList;
+
+  return { productList, favoriteProductList };
 }
 
 export default function Home() {
-  const { productList } = useLoaderData() as { productList: Product[] };
+  const { productList, favoriteProductList } = useLoaderData() as {
+    productList: Product[];
+    favoriteProductList: string[];
+  };
 
   return (
     <div className="m-24">
-      <div className="flex mb-5 justify-between flex-wrap">
-        {productList.map((product) => (
-          <ProductCard key={product.id} className="mb-5" product={product} />
+      <div className="flex mb-5  flex-wrap">
+        {productList.map((product: Product) => (
+          <ProductCard
+            key={product.id}
+            className="mb-5 mr-10"
+            product={product}
+            isFavoriteProduct={favoriteProductList.includes(product.id)}
+          />
         ))}
       </div>
     </div>

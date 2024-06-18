@@ -1,194 +1,144 @@
-import React, { useState } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Image,
-  InputGroup,
-  Button,
-  FormControl,
-  Card,
-} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import getShoppingCartItemList from '../../api/getProductList';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import getProduct from '../../api/getProduct';
+import ShoppingCarItem from './ShoppingCarItem';
+import { useEffect, useState } from 'react';
+import { hashString } from '../../api/hashString';
+import addProductOrder from '../../api/addProductOrder';
+import deleteProductToShoppingCart from '../../api/deleteProductToShoppingCart';
 
-// 商品数据
-const productsData = [
-  {
-    productName: '商品1',
-    price: 50.0,
-    initialQuantity: 1,
-    imageSrc: 'https://via.placeholder.com/150',
-  },
-  {
-    productName: '商品2',
-    price: 30.0,
-    initialQuantity: 1,
-    imageSrc: 'https://via.placeholder.com/150',
-  },
-  {
-    productName: '商品3',
-    price: 100.0,
-    initialQuantity: 1,
-    imageSrc: 'https://via.placeholder.com/150',
-  },
-  {
-    productName: '商品4',
-    price: 1000.0,
-    initialQuantity: 1,
-    imageSrc: 'https://via.placeholder.com/150',
-  },
-];
+export async function loader() {
+  const shoppingCartItemList = await getShoppingCartItemList();
+  const productList: Product[] = [];
 
-const QuantityInput: React.FC<{
-  initialQuantity: number;
-  onQuantityChange: (quantity: number) => void;
-}> = ({ initialQuantity, onQuantityChange }) => {
-  const [quantity, setQuantity] = useState(initialQuantity);
+  shoppingCartItemList.forEach(async (item) => {
+    const product = (await getProduct(item.productId)) as Product;
+    productList.push(product);
+  });
 
-  const handleIncrement = () => {
-    setQuantity((prevQuantity) => {
-      const newQuantity = prevQuantity < 100 ? prevQuantity + 1 : 100;
-      onQuantityChange(newQuantity);
-      return newQuantity;
-    });
+  return { shoppingCartItemList, productList };
+}
+
+export default function ShoppingCar() {
+  const { shoppingCartItemList, productList } = useLoaderData() as {
+    shoppingCartItemList: ShoppingCartItem[];
+    productList: Product[];
   };
 
-  const handleDecrement = () => {
-    setQuantity((prevQuantity) => {
-      const newQuantity = prevQuantity > 0 ? prevQuantity - 1 : 0;
-      onQuantityChange(newQuantity);
-      return newQuantity;
-    });
-  };
+  //選取的商品
+  const [checkProductItems, setCheckProductItems] = useState<
+    ShoppingCartItem[]
+  >([]);
+  const [isCheckAll, setIsCheckAll] = useState<boolean>(false); //是否全選
+  const [orderCost, setOrderCost] = useState<number>(0); //訂單總價
+  const navigate = useNavigate();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const number = Number(value);
-    if (!isNaN(number) && number >= 0) {
-      if (number > 100) {
-        setQuantity(100);
-      } else {
-        setQuantity(number);
-      }
-      onQuantityChange(number);
+  const placeAnOrder = async () => {
+    if (orderCost === 0) {
+      alert('請選擇商品');
+      return;
+    }
+
+    if (confirm('請確認是否要下訂')) {
+      const productOrderId = await hashString(
+        `${checkProductItems} ${new Date()}`
+      );
+
+      const productOrder: ProductOrder = {
+        productOrderId,
+        shoppingCartItemList: checkProductItems,
+        totalPrice: orderCost,
+      };
+
+      await addProductOrder(productOrder);
+
+      checkProductItems.forEach(async (ShoppingCartItem) => {
+        await deleteProductToShoppingCart(ShoppingCartItem.shoppingCartItemId);
+      });
+
+      alert('下訂成功');
+      navigate('/');
     }
   };
 
+  useEffect(() => {
+    console.log(checkProductItems);
+  }, [checkProductItems]);
+
   return (
-    <InputGroup className="quantity-input-group">
-      <Button
-        variant="outline-secondary"
-        onClick={handleDecrement}
-        className="quantity-button"
-      >
-        -
-      </Button>
-      <FormControl
-        type="number"
-        value={quantity}
-        onChange={handleChange}
-        className="quantity-input text-center"
+    <div>
+      <table className="table-fixed w-full text-center overflow-y-auto">
+        <thead className="text-2xl mb-3">
+          <tr>
+            <th></th>
+            <th></th>
+            <th>商品名稱</th>
+            <th>單價</th>
+            <th>數量</th>
+            <th>總價格</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {productList.map((product, index) => (
+            <ShoppingCarItem
+              className="mb-20 border-b-2 border-gray-200 text-xl"
+              key={index}
+              productId={product.id}
+              imgSrc={product.img}
+              productName={product.name}
+              productQuantity={shoppingCartItemList[index].quantity}
+              unitPrice={product.price}
+              numberOfProducts={product.numberOfProducts}
+              setCheckProductItems={setCheckProductItems}
+              setOrderCost={setOrderCost}
+              isCheckAll={isCheckAll}
+              shoppingCartItemId={
+                shoppingCartItemList[index].shoppingCartItemId
+              }
+            />
+          ))}
+        </tbody>
+      </table>
+      <Footer
+        orderCost={orderCost}
+        setIsCheckAll={setIsCheckAll}
+        placeAnOrder={placeAnOrder}
       />
-      <Button
-        variant="outline-secondary"
-        onClick={handleIncrement}
-        className="quantity-button"
-      >
-        +
-      </Button>
-    </InputGroup>
+    </div>
   );
-};
+}
 
-const ProductRow: React.FC<{
-  product: any;
-  onQuantityChange: (quantity: number) => void;
-  onCheckChange: (checked: boolean) => void;
-}> = ({ product, onQuantityChange, onCheckChange }) => {
-  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onCheckChange(event.target.checked);
-  };
-
+function Footer({
+  orderCost,
+  setIsCheckAll,
+  placeAnOrder,
+}: {
+  orderCost: number;
+  setIsCheckAll: React.Dispatch<React.SetStateAction<boolean>>;
+  placeAnOrder: () => void;
+}) {
   return (
-    <Row className="align-items-center my-2">
-      <Col xs={1}>
-        <Form.Check type="checkbox" onChange={handleCheckChange} />
-      </Col>
-      <Col xs={2}>
-        <Image src={product.imageSrc} thumbnail />
-      </Col>
-      <Col xs={3}>{product.productName}</Col>
-      <Col xs={2}>${product.price.toFixed(2)}</Col>
-      <Col xs={2} className="d-flex justify-content-center">
-        <QuantityInput
-          initialQuantity={product.initialQuantity}
-          onQuantityChange={onQuantityChange}
-        />
-      </Col>
-      <Col xs={2}>${(product.price * product.initialQuantity).toFixed(2)}</Col>
-    </Row>
+    <footer className="fixed bottom-0 left-0 w-full bg-gray-800  text-center p-4 text-white">
+      <div className="container mx-auto flex justify-between  items-center">
+        <div className="flex justify-center items-center">
+          <span className="text-xl mr-2">全選</span>
+          <input
+            className="h-5 w-5"
+            type="checkbox"
+            onChange={() => setIsCheckAll((prev) => !prev)}
+          />
+        </div>
+        <div className="flex justify-center items-center text-center">
+          <span className="text-xl mr-3">總價格：${orderCost}</span>
+          <button
+            className="bg-blue-600 px-3 py-2 rounded-md"
+            onClick={placeAnOrder}
+          >
+            結帳
+          </button>
+        </div>
+      </div>
+    </footer>
   );
-};
-
-const ShoppingCart: React.FC = () => {
-  const [products, setProducts] = useState(
-    productsData.map((product) => ({
-      ...product,
-      quantity: product.initialQuantity,
-      checked: false,
-    }))
-  );
-
-  const handleQuantityChange = (index: number) => (quantity: number) => {
-    const newProducts = [...products];
-    newProducts[index].quantity = quantity;
-    setProducts(newProducts);
-  };
-
-  const handleCheckChange = (index: number) => (checked: boolean) => {
-    const newProducts = [...products];
-    newProducts[index].checked = checked;
-    setProducts(newProducts);
-  };
-
-  const totalAmount = products
-    .filter((product) => product.checked)
-    .reduce((acc, product) => acc + product.price * product.quantity, 0)
-    .toFixed(2);
-
-  return (
-    <Container className="mt-4">
-      <Row className="bg-light p-2 border-bottom">
-        <Col xs={1}></Col>
-        <Col xs={2}></Col>
-        <Col xs={3}>商品名稱</Col>
-        <Col xs={2}>單價</Col>
-        <Col xs={2} className="text-center">
-          數量
-        </Col>
-        <Col xs={2}>總價格</Col>
-      </Row>
-      {products.map((product, index) => (
-        <ProductRow
-          key={index}
-          product={product}
-          onQuantityChange={handleQuantityChange(index)}
-          onCheckChange={handleCheckChange(index)}
-        />
-      ))}
-      <Card className="fixed-bottom bg-light p-3 border-top">
-        <Row className="justify-content-end">
-          <Col xs={2}>
-            <strong>總金額:</strong> ${totalAmount}
-          </Col>
-          <Col xs={2}>
-            <Button variant="primary">結帳</Button>
-          </Col>
-        </Row>
-      </Card>
-    </Container>
-  );
-};
-
-export default ShoppingCart;
+}

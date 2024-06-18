@@ -84,6 +84,7 @@ export default function Product() {
 
         <div className="mb-5 ">
           <NumberInputBox
+            text="數量"
             min={1}
             max={numberOfProducts}
             value={numberOfProduct}

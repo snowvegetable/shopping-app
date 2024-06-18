@@ -8,12 +8,17 @@ import Register, {
 } from './components/Public/Register';
 import Public, { loader as publicLoader } from './components/Public/Public';
 import Product, { loader as productLoader } from './components/Public/Product';
-import ShoppingCart from './components/AuthRouter/ShoppingCart';
+import ShoppingCar, {
+  loader as shoppingCartLoader,
+} from './components/AuthRouter/ShoppingCart';
 import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
 } from './components/AuthRouter/AuthRouter';
-import Favorite from './components/AuthRouter/Favorite';
+import Favorite, {
+  loader as favoriteLoader,
+} from './components/AuthRouter/Favorite';
+import Order, { loader as orderLoader } from './components/AuthRouter/Order';
 
 const router = createBrowserRouter([
   {
@@ -62,12 +67,19 @@ const router = createBrowserRouter([
             element: <div>hello</div>,
           },
           {
-            path: 'shoppingcart',
-            element: <ShoppingCart />,
+            path: 'shoppingcar',
+            element: <ShoppingCar />,
+            loader: shoppingCartLoader,
           },
           {
             path: 'favorite',
             element: <Favorite />,
+            loader: favoriteLoader,
+          },
+          {
+            path: 'order',
+            element: <Order />,
+            loader: orderLoader,
           },
         ],
       },

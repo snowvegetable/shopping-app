@@ -36,7 +36,8 @@ export default function AuthRouter() {
     pathList: [
       { name: '首頁', href: '/public' },
       { name: '喜好商品', href: '/authenticate/favorite' },
-      { name: '結帳', href: '/authenticate/ShoppingCart' },
+      { name: '購物車', href: '/authenticate/ShoppingCar' },
+      { name: '訂單', href: '/authenticate/order' },
     ],
   };
 

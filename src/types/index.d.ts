@@ -52,6 +52,7 @@ type User = {
   username: string;
   productList: ShoppingCartItem[];
   favoriteProductList: string[];
+  productOrderList: ProductOrder[];
 };
 
 /**
@@ -90,11 +91,25 @@ type Product = {
 /**
  * 購物車商品
  *
- * @param id 商品編號
+ * @param shoppingCartItemId 購物車商品編號
+ * @param productId 商品編號
  * @param quantity 商品數量
  */
 type ShoppingCartItem = {
   shoppingCartItemId: string;
   productId: string;
   quantity: number;
+};
+
+/**
+ * 訂單
+ *
+ * @param ProductOrderId 訂單編號
+ * @param ShoppingCartItemList 購物車商品列表，裡面保存商品Id和數量
+ * @param totalPrice 訂單總價格
+ */
+type ProductOrder = {
+  productOrderId: string;
+  shoppingCartItemList: ShoppingCartItem[];
+  totalPrice: number;
 };

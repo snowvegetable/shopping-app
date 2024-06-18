@@ -35,6 +35,7 @@ export default async function login(
         username: 'cat',
         productList: [],
         favoriteProductList: [],
+        productOrderList: [],
       };
       userDataJson = JSON.stringify(userData);
       localStorage.setItem('userData', userDataJson);
