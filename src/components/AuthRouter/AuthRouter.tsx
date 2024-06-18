@@ -19,23 +19,8 @@ export async function action({ request }) {
   const updates = Object.fromEntries(formData) as LoginFormData;
 
   try {
-    const loginStatus: LoginStatus = await login(
-      updates.account,
-      updates.password
-    );
-
-    console.log(loginStatus);
-
-    if (!loginStatus || loginStatus.status === 'error') {
-      return redirect('/');
-    }
-
-    localStorage.setItem('token', loginStatus.token);
-    localStorage.setItem('userData', JSON.stringify(loginStatus.userData));
-
-    console.log('action login');
-
-    return {};
+    await login(updates.account, updates.password);
+    return redirect('/');
   } catch (e) {
     alert('帳號或密碼輸入錯誤');
     return redirect('/public/login');
@@ -50,6 +35,7 @@ export default function AuthRouter() {
     },
     pathList: [
       { name: '首頁', href: '/public' },
+      { name: '喜好商品', href: '/authenticate/favorite' },
       { name: '結帳', href: '/authenticate/ShoppingCart' },
     ],
   };

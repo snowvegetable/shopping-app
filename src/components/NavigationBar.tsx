@@ -11,7 +11,7 @@ export default function NavigationBar({
   isLogin?: boolean;
 }) {
   return (
-    <header className="bg-gray-800 h-16 flex text-gray-300 px-3">
+    <header className="bg-gray-800 h-16 flex  text-gray-300 px-3">
       <Link to={pathList.index.href} className="mr-5 p-2">
         <img className="h-full" src={reactImg} alt={pathList.index.name} />
       </Link>
@@ -29,7 +29,7 @@ export default function NavigationBar({
       </nav>
 
       {isLogin && (
-        <div className="group relrelative ml-auto flex items-center ">
+        <div className="group relrelative ml-auto z-50 flex items-center ">
           <img className="h-14 rounded-full" src={catImg} alt="" />
           <div
             className="absolute bg-white text-gray-700 text-sm top-14 w-48 right-0 
@@ -41,6 +41,12 @@ export default function NavigationBar({
               to="/authenticate/ShoppingCart"
             >
               購物車
+            </Link>
+            <Link
+              className="flex px-4 py-2 hover:bg-gray-100 text-black no-underline"
+              to="/authenticate/favorite"
+            >
+              喜好商品
             </Link>
             <Link
               className="flex px-4 py-2 hover:bg-gray-100 text-black no-underline"

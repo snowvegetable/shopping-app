@@ -8,6 +8,8 @@ import shoppingCartSvg from '../../asset/svg/shopping-cart.svg';
 import NumberInputBox from '../NumberInputBox';
 import addFavoriteProduct from '../../api/addFavoriteProduct';
 import deleteFavoriteProduct from '../../api/deleteFavoriteProduct';
+import addProductToShoppingCart from '../../api/addProductToShoppingCart';
+import { hashString } from '../../api/hashString';
 
 export async function loader({ params }) {
   const product = await getProduct(params.productId);
@@ -18,7 +20,6 @@ export async function loader({ params }) {
   if (userDataJson) {
     const userData = JSON.parse(userDataJson) as User;
     favoriteProductList = new Set(userData.favoriteProductList);
-
     productIsFavorite = favoriteProductList.has(params.productId);
   }
 
@@ -48,6 +49,23 @@ export default function Product() {
     } else {
       await deleteFavoriteProduct(id);
     }
+  };
+
+  const handleAddToCart = async () => {
+    const shoppingCartItemId = await hashString(
+      `${id}${numberOfProduct}${new Date()}`
+    );
+    const shoppingCartItem: ShoppingCartItem = {
+      shoppingCartItemId: shoppingCartItemId,
+      productId: id,
+      quantity: numberOfProduct,
+    };
+
+    await addProductToShoppingCart(shoppingCartItem);
+
+    alert('已添加到購物車');
+
+    setNumberOfProduct(1);
   };
 
   return (
@@ -84,7 +102,10 @@ export default function Product() {
             />
             <span>{!isFavorite ? '喜愛' : '取消喜愛'}</span>
           </button>
-          <button className="px-16 py-3 border-2 mr-10 inline-block text-center">
+          <button
+            className="px-16 py-3 border-2 mr-10 inline-block text-center"
+            onClick={handleAddToCart}
+          >
             <img className="inline-block h-7 mr-2" src={shoppingCartSvg} />
             <span>加進購物車</span>
           </button>

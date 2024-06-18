@@ -16,29 +16,29 @@ const userList: LoginFormData[] = [
 export default async function login(
   account: string,
   password: string
-): Promise<LoginStatus> {
+): Promise<void> {
   return new Promise((resolve, reject) => {
     const user = userList.find(
       (user) => user.account === account && user.password === password
     );
 
     if (!user) {
-      reject({
-        status: 'error',
-      });
+      reject();
       return;
     }
 
-    setTimeout(() => {
-      resolve({
-        status: 'success',
-        token: 'token',
-        userData: {
-          username: user.account,
-          productList: [],
-          favoriteProductList: [],
-        },
-      });
-    }, 100);
+    localStorage.setItem('token', 'token');
+
+    let userDataJson = localStorage.getItem('userData');
+    if (!userDataJson) {
+      const userData: User = {
+        username: 'cat',
+        productList: [],
+        favoriteProductList: [],
+      };
+      userDataJson = JSON.stringify(userData);
+      localStorage.setItem('userData', userDataJson);
+    }
+    resolve();
   });
 }

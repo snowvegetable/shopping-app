@@ -36,6 +36,7 @@ export default function Public() {
       },
       pathList: [
         { name: '首頁', href: '/public' },
+        { name: '喜好商品', href: '/authenticate/favorite' },
         { name: '結帳', href: '/authenticate/ShoppingCart' },
       ],
     };

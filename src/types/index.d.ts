@@ -28,7 +28,6 @@ type PathList = {
  * @param token 用於身分驗證的token
  */
 type LoginStatus = {
-  status: 'success' | 'error';
   token: string;
   userData?: User;
 };
@@ -51,7 +50,7 @@ type LoginFormData = {
  */
 type User = {
   username: string;
-  productList: Product[];
+  productList: ShoppingCartItem[];
   favoriteProductList: string[];
 };
 
@@ -86,4 +85,16 @@ type Product = {
   numberOfProducts: number;
   img: string;
   text: string;
+};
+
+/**
+ * 購物車商品
+ *
+ * @param id 商品編號
+ * @param quantity 商品數量
+ */
+type ShoppingCartItem = {
+  shoppingCartItemId: string;
+  productId: string;
+  quantity: number;
 };

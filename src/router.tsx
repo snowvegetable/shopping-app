@@ -8,11 +8,12 @@ import Register, {
 } from './components/Public/Register';
 import Public, { loader as publicLoader } from './components/Public/Public';
 import Product, { loader as productLoader } from './components/Public/Product';
-import ShoppingCart from './components/Public/ShoppingCart';
+import ShoppingCart from './components/AuthRouter/ShoppingCart';
 import AuthRouter, {
   loader as AuthRouterLoader,
   action as AuthRouterAction,
 } from './components/AuthRouter/AuthRouter';
+import Favorite from './components/AuthRouter/Favorite';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
           {
             path: 'shoppingcart',
             element: <ShoppingCart />,
+          },
+          {
+            path: 'favorite',
+            element: <Favorite />,
           },
         ],
       },
