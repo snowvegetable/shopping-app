@@ -13,7 +13,7 @@ export default function ProductCard({
 }: {
   className?: string;
   product: Product;
-  isFavoriteProduct: boolean;
+  isFavoriteProduct?: boolean;
 }) {
   const { id, name, price, numberOfProducts, img, text }: Product = product;
   const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteProduct);

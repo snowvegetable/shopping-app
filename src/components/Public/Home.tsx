@@ -1,25 +1,26 @@
 import getRecommendProductsList from '../../api/getRecommendProductsList';
-import { redirect, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import ProductCard from '../ProductCard';
+import checkIsLogin from '../../api/checkIsLogin';
 
 export async function loader() {
   const productList = await getRecommendProductsList();
   const userDataJson = localStorage.getItem('userData');
-
-  if (!userDataJson) {
-    return redirect('/');
+  const isLogin = await checkIsLogin();
+  let favoriteProductList: string[] | undefined = undefined;
+  if (userDataJson) {
+    const userData = JSON.parse(userDataJson) as User;
+    favoriteProductList = userData.favoriteProductList;
   }
 
-  const userData = (await JSON.parse(userDataJson)) as User;
-  const favoriteProductList = userData.favoriteProductList;
-
-  return { productList, favoriteProductList };
+  return { productList, favoriteProductList, isLogin };
 }
 
 export default function Home() {
-  const { productList, favoriteProductList } = useLoaderData() as {
+  const { productList, favoriteProductList, isLogin } = useLoaderData() as {
     productList: Product[];
-    favoriteProductList: string[];
+    favoriteProductList: string[] | undefined;
+    isLogin: boolean;
   };
 
   return (
@@ -30,7 +31,10 @@ export default function Home() {
             key={product.id}
             className="mb-5 mr-10"
             product={product}
-            isFavoriteProduct={favoriteProductList.includes(product.id)}
+            isFavoriteProduct={
+              isLogin && favoriteProductList?.includes(product.id)
+            }
+            // isFavoriteProduct={false}
           />
         ))}
       </div>
