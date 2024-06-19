@@ -16,7 +16,9 @@ export default function ProductCard({
   isFavoriteProduct?: boolean;
 }) {
   const { id, name, price, numberOfProducts, img, text }: Product = product;
-  const [isFavorite, setIsFavorite] = useState<boolean>(isFavoriteProduct);
+  const [isFavorite, setIsFavorite] = useState<boolean | undefined>(
+    isFavoriteProduct
+  );
 
   const onFavoriteButtonClick = async () => {
     const newIsFavorite = !isFavorite;
